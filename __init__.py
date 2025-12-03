@@ -41,7 +41,39 @@ def extract_minutes(date_string):
     date_object = datetime.strptime(date_string, '%Y-%m-%dT%H:%M:%SZ')
     minutes = date_object.minute
     return jsonify({'minutes': minutes})
-  
+
+@app.route('/github-commits/')
+def github_commits():
+    # 1) Appel à l'API GitHub
+    response = urlopen('https://api.github.com/repos/OpenRSI/5MCSI_Metriques/commits')
+    raw_content = response.read()
+    commits_json = json.loads(raw_content.decode('utf-8'))
+
+    # 2) Dictionnaire minute -> nombre de commits
+    stats_par_minute = {}  # ex: {0: 3, 12: 5, 57: 2, ...}
+
+    for commit in commits_json:
+        # La date est dans commit["commit"]["author"]["date"]
+        date_str = commit["commit"]["author"]["date"]  # "2024-02-11T11:57:27Z"
+        dt = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%SZ')
+        minute = dt.minute
+
+        if minute not in stats_par_minute:
+            stats_par_minute[minute] = 0
+        stats_par_minute[minute] += 1
+
+    # 3) On prépare la liste de résultats pour le JSON
+    results = []
+    for minute, nb in sorted(stats_par_minute.items()):
+        results.append({
+            'minute': minute,
+            'nb_commits': nb
+        })
+
+    # 4) On renvoie les données
+    return jsonify(results=results)
+
+
 if __name__ == "__main__":
   app.run(debug=True)
 
