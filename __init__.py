@@ -35,7 +35,3 @@ def meteo():
 @app.route("/rapport/")
 def mongraphique():
     return render_template("graphique.html")
-
-@app.route("/histogramme/")
-def mongraphique(): 
-  return render_template  ('https://developers-dot-devsite-v2-prod.appspot.com/chart/interactive/docs/gallery?hl=fr')
