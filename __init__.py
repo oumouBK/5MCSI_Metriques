@@ -14,11 +14,6 @@ def MaPremiereAPI():
 @app.route('/')
 def hello_world():
     return render_template('hello.html') #com
-  
-  
-if __name__ == "__main__":
-  app.run(debug=True)
-
 
 @app.route('/tawarano/')
 def meteo():
@@ -35,3 +30,15 @@ def meteo():
 @app.route("/rapport/")
 def mongraphique():
     return render_template("graphique.html")
+  
+@app.route("/histogramme/")
+def histogramme():
+    return render_template("histogramme.html")
+
+  
+  
+if __name__ == "__main__":
+  app.run(debug=True)
+
+
+
