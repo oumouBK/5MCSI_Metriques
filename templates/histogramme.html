@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Histogramme des températures</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  </head>
+  <body>
+    <h2>Histogramme des températures de Tawarano</h2>
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+
+    <script>
+      // Chargement de la librairie Google Charts
+      google.charts.load('current', { packages: ['corechart'] });
+
+      // Quand Google Charts est prêt, on lance la fonction loadData
+      google.charts.setOnLoadCallback(loadData);
+
+      // 1) On récupère les données de l'API /tawarano/
+      function loadData() {
+        fetch('/tawarano/')
+          .then(response => response.json())
+          .then(data => {
+            drawChart(data);
+          });
+      }
+
+      // 2) On construit l'histogramme à partir des données
+      function drawChart(data) {
+        // Création du tableau de données pour Google Charts
+        var dataTable = new google.visualization.DataTable();
+        dataTable.addColumn('string', 'Date');
+        dataTable.addColumn('number', 'Température');
+
+        // On remplit le tableau avec les résultats de l’API
+        data.results.forEach(entry => {
+          var date = new Date(entry.Jour * 1000); // Timestamp -> Date JS
+          var dateStr = date.toLocaleDateString(); // On formate la date
+          dataTable.addRow([dateStr, entry.temp]);
+        });
+
+        // Options de l’histogramme
+        var options = {
+          title: 'Évolution des températures (Tawarano)',
+          legend: { position: 'none' },
+          hAxis: { title: 'Date' },
+          vAxis: { title: 'Température (°C)' }
+        };
+
+        // 3) On crée un graphique à colonnes (ColumnChart)
+        var chart = new google.visualization.ColumnChart(
+          document.getElementById('chart_div')
+        );
+
+        // 4) On dessine le graphique
+        chart.draw(dataTable, options);
+      }
+    </script>
+  </body>
+</html>
