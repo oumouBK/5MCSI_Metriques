@@ -73,6 +73,11 @@ def github_commits():
     # 4) On renvoie les données
     return jsonify(results=results)
 
+@app.route("/commits/")
+def commits():
+    return render_template("commits.html")
+
+
 
 if __name__ == "__main__":
   app.run(debug=True)
