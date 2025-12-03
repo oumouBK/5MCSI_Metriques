@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Commits du projet</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  </head>
+  <body>
+    <h2>Répartition des commits par minute</h2>
+    <p>
+      Ce graphique affiche le nombre de commits du projet<br />
+      en fonction de la minute (0 à 59) à laquelle ils ont été réalisés.
+    </p>
+
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+
+    <script>
+      // 1) Chargement de Google Charts
+      google.charts.load('current', { packages: ['corechart'] });
+      google.charts.setOnLoadCallback(loadData);
+
+      // 2) Récupération des données de l'API /github-commits/
+      function loadData() {
+        fetch('/github-commits/')
+          .then(response => response.json())
+          .then(data => {
+            drawChart(data);
+          });
+      }
+
+      // 3) Création du graphique
+      function drawChart(data) {
+        var dataTable = new google.visualization.DataTable();
+        dataTable.addColumn('number', 'Minute');
+        dataTable.addColumn('number', 'Nombre de commits');
+
+        data.results.forEach(entry => {
+          dataTable.addRow([entry.minute, entry.nb_commits]);
+        });
+
+        var options = {
+          title: 'Nombre de commits par minute',
+          hAxis: { title: 'Minute (0-59)' },
+          vAxis: { title: 'Nombre de commits' },
+          legend: { position: 'none' }
+        };
+
+        var chart = new google.visualization.ColumnChart(
+          document.getElementById('chart_div')
+        );
+        chart.draw(dataTable, options);
+      }
+    </script>
+  </body>
+</html>
