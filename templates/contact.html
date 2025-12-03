@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Page de contact</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #4e54c8, #8f94fb);
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 60px auto;
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 30px 40px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      }
+
+      h1 {
+        text-align: center;
+        margin-top: 0;
+        color: #333;
+      }
+
+      p.sous-titre {
+        text-align: center;
+        color: #666;
+        margin-bottom: 30px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: bold;
+        color: #444;
+      }
+
+      input[type="text"],
+      textarea {
+        width: 100%;
+        padding: 10px 12px;
+        margin-bottom: 18px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+
+      textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+
+      button {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 999px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        background: #4e54c8;
+        color: white;
+        transition: transform 0.1s ease, box-shadow 0.1s ease;
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 12px;
+        color: #eee;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Contactez-moi</h1>
+      <p class="sous-titre">
+        Une question, une remarque, un petit mot ?<br />
+        Laissez-moi un message ci-dessous.
+      </p>
+
+      <!-- Le formulaire de contact -->
+      <form action="#" method="post">
+        <label for="prenom">Prénom</label>
+        <input type="text" id="prenom" name="prenom" placeholder="Votre prénom" required />
+
+        <label for="nom">Nom</label>
+        <input type="text" id="nom" name="nom" placeholder="Votre nom" required />
+
+        <label for="message">Votre message</label>
+        <textarea id="message" name="message" placeholder="Écrivez votre message ici..." required></textarea>
+
+        <button type="submit">Envoyer mon message</button>
+      </form>
+    </div>
+
+    <div class="footer">
+      © 2024 - Ma page de contact
+    </div>
+  </body>
+</html>
